@@ -7,4 +7,5 @@ export interface IClientsRepository {
   findByCpf(cpf: string): Promise<Document | null>;
   findAll(): Promise<Document[]>;
   findById(id: string): Promise<Document | null>;
+  delete(id: string): Promise<void>;
 }

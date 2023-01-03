@@ -23,4 +23,8 @@ export class MongodbClientsRepository implements IClientsRepository {
   async findById(id: string): Promise<Document | null> {
     return await clientModel.findById(id);
   }
+
+  async delete(id: string): Promise<void> {
+    await clientModel.findByIdAndDelete(id);
+  }
 }
