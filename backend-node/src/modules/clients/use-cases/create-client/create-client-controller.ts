@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { Error } from "mongoose";
 import { container } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppError";
 import { CreateClientUseCase } from "./create-client-use-case";
 
 export class CreateClientController {
@@ -8,8 +10,16 @@ export class CreateClientController {
 
     const createClientUseCase = container.resolve(CreateClientUseCase);
 
-    const result = await createClientUseCase.execute(data);
+    try {
+      const result = await createClientUseCase.execute(data);
 
-    return res.status(201).json(result);
+      return res.status(201).json(result);
+    } catch (err) {
+      if (err instanceof AppError) {
+        return res.status(err.statusCode).json({ message: err.message });
+      }
+
+      return res.status(500).json({ message: "Internal server error" });
+    }
   }
 }
