@@ -19,4 +19,8 @@ export class MongodbClientsRepository implements IClientsRepository {
   async findAll() {
     return await clientModel.find();
   }
+
+  async findById(id: string): Promise<Document | null> {
+    return await clientModel.findById(id);
+  }
 }
