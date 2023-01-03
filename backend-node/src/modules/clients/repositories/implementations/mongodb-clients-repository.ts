@@ -1,4 +1,3 @@
-import { AppError } from "./../../../../shared/errors/AppError";
 import { clientModel } from "./../../schemas/client";
 import { ICreateClientDTO } from "../../dtos/create-client-dto";
 import { IClientsRepository } from "../clients-repository";
@@ -15,5 +14,9 @@ export class MongodbClientsRepository implements IClientsRepository {
 
   async findByCpf(cpf: string): Promise<Document | null> {
     return await clientModel.findOne({ cpf });
+  }
+
+  async findAll() {
+    return await clientModel.find();
   }
 }
