@@ -1,0 +1,15 @@
+FROM node
+
+WORKDIR /app
+
+COPY package*.json ./
+
+COPY tsconfig.json ./
+
+RUN yarn
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["yarn", "dev"]
