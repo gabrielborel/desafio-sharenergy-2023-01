@@ -1,10 +1,10 @@
 import { AppError } from "../../../../shared/errors/AppError";
-import { IAuthenticateDTO } from "../dtos/authenticate-dto";
+import { IAuthenticateDTO } from "../../dtos/authenticate-dto";
 import { sign } from "jsonwebtoken";
 
 export class AuthenticateUseCase {
   async execute(data: IAuthenticateDTO) {
-    const { username, password, rememberMe = false } = data;
+    const { username, password } = data;
 
     const CORRECT_USERNAME = "desafiosharenergy";
     const CORRECT_PASSWORD = "sh@r3n3rgy";
@@ -15,8 +15,9 @@ export class AuthenticateUseCase {
       throw new AppError(401, "Nome de usuário ou senha inválidos.");
     }
 
-    const expiresIn = rememberMe ? "7d" : "10m";
-    const token = sign({}, "92eb5ffee6ae2fec3ad71c777531578f", { expiresIn });
+    const token = sign({}, "92eb5ffee6ae2fec3ad71c777531578f", {
+      expiresIn: "7d",
+    });
 
     return { token };
   }

@@ -5,14 +5,13 @@ import { AuthenticateUseCase } from "./authenticate-use-case";
 
 export class AuthenticateController {
   async handle(req: Request, res: Response) {
-    const { username, password, rememberMe } = req.body;
+    const { username, password } = req.body;
 
     const authenticateUseCase = container.resolve(AuthenticateUseCase);
 
     try {
       const result = await authenticateUseCase.execute({
         password,
-        rememberMe,
         username,
       });
 
