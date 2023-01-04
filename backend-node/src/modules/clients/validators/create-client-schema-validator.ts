@@ -15,8 +15,8 @@ export const createClientSchema = z.object({
       .max(11, "O telefone deve ter no máximo 11 dígitos."),
     cpf: z
       .string({ required_error: "CPF é obrigatório." })
-      .min(11, "O telefone deve ter no mínimo 11 dígitos.")
-      .max(12, "O telefone deve ter no máximo 12 dígitos."),
+      .min(11, "O cpf deve ter no mínimo 11 dígitos.")
+      .max(12, "O cpf deve ter no máximo 12 dígitos."),
     address: z
       .string({ required_error: "Endereço é obrigatório." })
       .min(20, "O endereço deve ter no mínimo 20 dígitos.")
