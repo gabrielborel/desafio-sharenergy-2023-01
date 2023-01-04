@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import { Header } from "../components/Header";
 
 interface TokenInfo {
   exp: number;
@@ -36,5 +37,13 @@ export function Protected() {
     return navigate("/");
   }, []);
 
-  return <Outlet />;
+  return (
+    <main className="flex flex-col gap-20 pb-8">
+      <Header />
+
+      <div className="bg-gray-100 max-w-[1220px] w-full mx-auto p-4 shadow-md">
+        <Outlet />
+      </div>
+    </main>
+  );
 }
