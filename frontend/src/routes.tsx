@@ -5,14 +5,13 @@ import { RandomUsers } from "./pages/RandomUsers";
 
 export const router = createBrowserRouter([
   {
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
     path: "/",
     element: <Protected />,
     children: [
-      {
-        path: "/auth",
-        element: <Auth />,
-      },
-
       {
         path: "/",
         element: <RandomUsers />,
