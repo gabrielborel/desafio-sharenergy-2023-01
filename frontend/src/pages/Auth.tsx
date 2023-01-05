@@ -49,8 +49,6 @@ export function Auth() {
   const authFormSubmit: SubmitHandler<InputTypes> = async (data) => {
     setOnSubmitLoading(true);
 
-    console.log(data);
-
     setTimeout(async () => {
       try {
         const {
@@ -109,7 +107,7 @@ export function Auth() {
       <img
         src="https://www.sharenergy.com.br/wp-content/uploads/2022/12/logo_color.png"
         className="w-[260px] h-8 sm:w-[300px] sm:h-12 md:w-[400px] md:h-16"
-        alt=""
+        alt="Logo Sharenergy"
       />
 
       <form
@@ -141,7 +139,6 @@ export function Auth() {
               }
             )}
             placeholder="Digite seu nome de usuário"
-            required
           />
           {!!errors.username && (
             <p className="mt-2 text-sm text-red-600 dark:text-red-500">
@@ -177,7 +174,6 @@ export function Auth() {
                 }
               )}
               placeholder="Digite sua senha"
-              required
             />
             <button
               type="button"
@@ -211,12 +207,10 @@ export function Auth() {
           </label>
         </div>
         <button
-          disabled={(!isValid && submitCount > 1) || onSubmitLoading}
           type="submit"
           className="flex items-center justify-center text-white bg-green-500 disabled:opacity-70 disabled:cursor-not-allowed not:disabled:hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm md:text-base w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:not:disabled:hover:bg-green-700 dark:focus:ring-green-800 transition-colors"
         >
-          {onSubmitLoading && <Spinner />}
-          Entrar
+          {onSubmitLoading ? <Spinner /> : "Entrar"}
         </button>
       </form>
     </div>

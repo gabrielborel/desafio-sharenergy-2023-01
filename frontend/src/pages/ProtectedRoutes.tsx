@@ -39,7 +39,7 @@ export function Protected() {
     <main className="flex flex-col gap-20 pb-8">
       <Header />
 
-      <div className="bg-gray-100 max-w-[1220px] w-full mx-auto p-6 pb-8 shadow-sm border-2 border-gray-200">
+      <div className="bg-gray-100 max-w-[1220px] w-full mx-auto p-3 md:p-6 pb-8 shadow-sm border-t-2 border-b-2 lg:border-2 border-gray-200">
         <Outlet />
       </div>
     </main>

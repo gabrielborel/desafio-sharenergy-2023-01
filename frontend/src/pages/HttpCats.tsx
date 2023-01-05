@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import classNames from "classnames";
 import { Buffer } from "buffer";
 import { useState } from "react";
+import { Spinner } from "../components/Spinner";
 
 const schema = z.object({
   statusCode: z.number({
@@ -22,10 +23,12 @@ export function HttpCats() {
     formState: { errors },
     setError,
   } = useForm<InputTypes>({ resolver: zodResolver(schema) });
+  const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState("");
 
   const handleFormSubmit: SubmitHandler<InputTypes> = (data) => {
     const { statusCode } = data;
+    setIsLoading(true);
 
     api
       .get(`https://http.cat/${statusCode}`, { responseType: "arraybuffer" })
@@ -34,15 +37,21 @@ export function HttpCats() {
         const base64String = btoa(
           String.fromCharCode(...new Uint8Array(imageBuffer))
         );
-        setImage(base64String);
+        setTimeout(() => {
+          setImage(base64String);
+          setIsLoading(false);
+        }, 1500);
       })
       .catch(() => {
-        setImage(
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLtVw6QIswway_twpH7QzU1sQbygSQeTAmIw&usqp=CAU"
-        );
-        setError("statusCode", {
-          message: "Nenhuma imagem encontrada com esse status code!",
-        });
+        setTimeout(() => {
+          setImage(
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLtVw6QIswway_twpH7QzU1sQbygSQeTAmIw&usqp=CAU"
+          );
+          setError("statusCode", {
+            message: "Nenhuma imagem encontrada com esse status code!",
+          });
+          setIsLoading(false);
+        }, 1500);
       });
   };
 
@@ -93,10 +102,11 @@ export function HttpCats() {
             placeholder="Digite um status code"
           />
           <button
+            disabled={isLoading}
             type="submit"
-            className=" text-white absolute right-2.5 bottom-2.5 bg-green-700 disabled:opacity-50 hover:not:disabled:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
+            className="text-white absolute right-2.5 bottom-2.5 w-[76px] h-[36px] flex items-center justify-center bg-green-700 disabled:opacity-50 hover:not:disabled:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
           >
-            Buscar
+            {isLoading ? <Spinner /> : "Buscar"}
           </button>
         </div>
 
