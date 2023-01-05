@@ -22,6 +22,10 @@ export const router = createBrowserRouter([
         path: "/cats",
         element: <HttpCats />,
       },
+      {
+        path: "/dogs",
+        element: <RandomDogs />,
+      },
     ],
   },
 ]);
