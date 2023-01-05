@@ -61,7 +61,7 @@ export function RandomUsers() {
   const paginatedUsers = filteredUsers.slice(beginIndex, endIndex);
 
   return (
-    <section className="md:px-10">
+    <section className="md:px-10 min-h-[600px] flex flex-col">
       <h1 className="my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center">
         Random Users
       </h1>
@@ -170,7 +170,7 @@ export function RandomUsers() {
         </form>
       </div>
 
-      <div className="justify-between my-8 flex flex-wrap gap-6">
+      <div className="justify-between my-8 flex-1 flex flex-wrap gap-6">
         {paginatedUsers?.map((user, id) => (
           <UserCard key={id} user={user} />
         ))}
