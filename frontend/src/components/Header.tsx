@@ -18,7 +18,7 @@ export function Header() {
   }
 
   return (
-    <header className="bg-gray-100 py-6 px-3">
+    <header className="bg-gray-100 pt-2 px-3 shadow-sm border-b-2">
       <section className="max-w-[1220px] items-center flex justify-between mx-auto">
         <div>
           <Menu />
