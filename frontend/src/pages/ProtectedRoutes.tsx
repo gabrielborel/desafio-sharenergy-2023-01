@@ -33,15 +33,13 @@ export function Protected() {
       sessionStorage.removeItem("@sharenergy-access_token");
       return navigate("/auth");
     }
-
-    return navigate("/");
   }, []);
 
   return (
     <main className="flex flex-col gap-20 pb-8">
       <Header />
 
-      <div className="bg-gray-100 max-w-[1220px] w-full mx-auto p-4 shadow-md">
+      <div className="bg-gray-100 max-w-[1220px] w-full mx-auto p-6 pb-8 shadow-sm border-2 border-gray-200">
         <Outlet />
       </div>
     </main>
