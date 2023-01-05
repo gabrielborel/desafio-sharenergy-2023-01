@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Auth } from "./pages/Auth";
+import { HttpCats } from "./pages/HttpCats";
 import { Protected } from "./pages/ProtectedRoutes";
+import { RandomDogs } from "./pages/RandomDog";
 import { RandomUsers } from "./pages/RandomUsers";
 
 export const router = createBrowserRouter([
@@ -15,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <RandomUsers />,
+      },
+      {
+        path: "/cats",
+        element: <HttpCats />,
       },
     ],
   },
