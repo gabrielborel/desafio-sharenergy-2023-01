@@ -63,7 +63,7 @@ export function RandomUsers() {
   return (
     <section className="md:px-10 min-h-[600px] flex flex-col">
       <h1 className="my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center">
-        Random Users
+        Usuários
       </h1>
 
       <div className="max-w-xs">

@@ -21,28 +21,28 @@ export function Menu() {
               "text-green-600": location.pathname === "/",
             })}
           >
-            <Link to="/">Random Users</Link>
+            <Link to="/">Usuários</Link>
           </DM.Item>
           <DM.Item
             className={classNames({
               "text-green-600": location.pathname === "/cats",
             })}
           >
-            <Link to="/cats">Http Cats</Link>
+            <Link to="/cats">Gatos</Link>
           </DM.Item>
           <DM.Item
             className={classNames({
               "text-green-600": location.pathname === "/dogs",
             })}
           >
-            <Link to="/dogs">Random Dogs</Link>
+            <Link to="/dogs">Cachorros</Link>
           </DM.Item>
           <DM.Item
             className={classNames({
               "text-green-600": location.pathname === "/clients",
             })}
           >
-            <Link to="/clients">Clients</Link>
+            <Link to="/clients">Clientes</Link>
           </DM.Item>
         </DM.Content>
       </DM.Portal>

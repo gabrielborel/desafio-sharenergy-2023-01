@@ -18,7 +18,7 @@ export function Navbar() {
               }
             )}
           >
-            Random Users
+            Usuários
           </Link>
         </li>
         <li className="mr-2">
@@ -32,7 +32,7 @@ export function Navbar() {
               }
             )}
           >
-            Http Cat
+            Gatos
           </Link>
         </li>
         <li className="mr-2">
@@ -46,7 +46,7 @@ export function Navbar() {
               }
             )}
           >
-            Random Dogs
+            Cachorros
           </Link>
         </li>
         <li className="mr-2">
@@ -60,7 +60,7 @@ export function Navbar() {
               }
             )}
           >
-            Clients
+            Clientes
           </Link>
         </li>
       </ul>

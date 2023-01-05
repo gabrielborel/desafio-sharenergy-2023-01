@@ -23,7 +23,7 @@ export function RandomDogs() {
   return (
     <section className="min-h-[540px] max-w-[440px] mx-auto">
       <h1 className="my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center">
-        Random Dogs
+        Cachorros
       </h1>
 
       <p className="text-base text-gray-900 dark:text-white mb-2">

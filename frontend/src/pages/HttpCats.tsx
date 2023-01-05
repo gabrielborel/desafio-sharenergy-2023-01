@@ -58,7 +58,7 @@ export function HttpCats() {
   return (
     <section className="min-h-[540px] max-w-[440px] mx-auto">
       <h1 className="my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center">
-        Http Cats
+        Gatos
       </h1>
 
       <form onSubmit={handleSubmit(handleFormSubmit)} className="mt-8">
