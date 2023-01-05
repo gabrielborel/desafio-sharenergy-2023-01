@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { Error404 } from "./pages/404";
 import { Auth } from "./pages/Auth";
 import { HttpCats } from "./pages/HttpCats";
 import { Protected } from "./pages/ProtectedRoutes";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/dogs",
         element: <RandomDogs />,
+      },
+      {
+        path: "*",
+        element: <Error404 />,
       },
     ],
   },
