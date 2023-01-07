@@ -5,10 +5,7 @@ const clientSchema = new mongoose.Schema({
   email: { type: String, required: true },
   cpf: { type: String, required: true },
   cellphone: { type: String, required: true },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  address: { type: String, required: true },
 });
 
 export const clientModel = mongoose.model("Client", clientSchema);
