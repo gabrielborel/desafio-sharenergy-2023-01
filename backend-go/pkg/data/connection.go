@@ -18,7 +18,6 @@ type Connection struct {
 }
 
 func NewMongoConnection(cfg *config.Settings) Connection {
-
 	uri := fmt.Sprintf("mongodb://%s/%s", cfg.DbHost, cfg.DbName)
 
 	credentials := options.Credential{
@@ -33,9 +32,11 @@ func NewMongoConnection(cfg *config.Settings) Connection {
 	defer cancel()
 
 	client, err := mongo.Connect(ctx, clientOpts)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	err = client.Ping(ctx, readpref.Primary())
-
 	if err != nil {
 		log.Fatal(err)
 	}
