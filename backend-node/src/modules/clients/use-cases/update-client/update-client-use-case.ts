@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateClientDTO } from "../../dtos/update-client-dto";
+import { Client } from "../../entities/client";
 import { IClientsRepository } from "../../repositories/clients-repository";
 
 @injectable()
@@ -9,7 +9,7 @@ export class UpdateClientUseCase {
     private clientsRepository: IClientsRepository
   ) {}
 
-  async execute(id: string, data: IUpdateClientDTO) {
+  async execute(id: string, data: Partial<Client>) {
     return await this.clientsRepository.update(id, data);
   }
 }

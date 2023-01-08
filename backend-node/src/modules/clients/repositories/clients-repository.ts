@@ -1,13 +1,11 @@
-import { Document } from "mongoose";
-import { ICreateClientDTO } from "../dtos/create-client-dto";
-import { IUpdateClientDTO } from "../dtos/update-client-dto";
+import { Client } from "../entities/client";
 
 export interface IClientsRepository {
-  create(data: ICreateClientDTO): Promise<Document>;
-  findByEmail(email: string): Promise<Document | null>;
-  findByCpf(cpf: string): Promise<Document | null>;
-  findAll(): Promise<Document[]>;
-  findById(id: string): Promise<Document | null>;
+  create(data: Client): Promise<Client>;
+  findByEmail(email: string): Promise<Client | null>;
+  findByCpf(cpf: string): Promise<Client | null>;
+  findAll(): Promise<Client[]>;
+  findById(id: string): Promise<Client | null>;
   delete(id: string): Promise<void>;
-  update(id: string, data: IUpdateClientDTO): Promise<Document | null>;
+  update(id: string, data: Partial<Client>): Promise<Client | null>;
 }

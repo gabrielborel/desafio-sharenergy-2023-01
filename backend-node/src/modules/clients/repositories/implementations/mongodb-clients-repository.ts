@@ -1,39 +1,64 @@
 import { clientModel } from "./../../schemas/client";
-import { ICreateClientDTO } from "../../dtos/create-client-dto";
 import { IClientsRepository } from "../clients-repository";
-import { Document } from "mongoose";
-import { IUpdateClientDTO } from "../../dtos/update-client-dto";
+import { Client } from "../../entities/client";
+import { ObjectId } from "mongodb";
+import { ClientMapper } from "../../mappers/client-mapper";
+
+export interface MongodbClient {
+  _id: ObjectId;
+  name: string;
+  email: string;
+  cpf: string;
+  cellphone: string;
+  address: string;
+}
 
 export class MongodbClientsRepository implements IClientsRepository {
-  async create(data: ICreateClientDTO): Promise<Document> {
-    return await clientModel.create(data);
+  async create(client: Client): Promise<Client> {
+    const createdClient = await clientModel.create(client);
+    return ClientMapper.toDomain(createdClient);
   }
 
-  async findByEmail(email: string): Promise<Document | null> {
-    return await clientModel.findOne({ email });
+  async findByEmail(email: string): Promise<Client | null> {
+    const client = await clientModel.findOne({ email });
+    if (!client) return null;
+
+    return ClientMapper.toDomain(client);
   }
 
-  async findByCpf(cpf: string): Promise<Document | null> {
-    return await clientModel.findOne({ cpf });
+  async findByCpf(cpf: string): Promise<Client | null> {
+    const client = await clientModel.findOne({ cpf });
+    if (!client) return null;
+
+    return ClientMapper.toDomain(client);
   }
 
-  async findAll() {
-    return await clientModel.find();
+  async findAll(): Promise<Client[]> {
+    const clients = await clientModel.find();
+    console.log(clients);
+    return clients.map(ClientMapper.toDomain);
   }
 
-  async findById(id: string): Promise<Document | null> {
-    return await clientModel.findById(id);
+  async findById(id: string): Promise<Client | null> {
+    const client = await clientModel.findById(id.trim());
+    if (!client) return null;
+
+    return ClientMapper.toDomain(client);
   }
 
   async delete(id: string): Promise<void> {
-    await clientModel.findByIdAndDelete(id);
+    await clientModel.findByIdAndDelete(id.trim());
   }
 
-  async update(id: string, data: IUpdateClientDTO): Promise<Document | null> {
-    return await clientModel.findByIdAndUpdate(
+  async update(id: string, data: Partial<Client>): Promise<Client | null> {
+    const client = await clientModel.findByIdAndUpdate(
       id,
       { $set: data },
       { new: true }
     );
+
+    if (!client) return null;
+
+    return ClientMapper.toDomain(client);
   }
 }
