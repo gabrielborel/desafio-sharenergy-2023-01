@@ -1,6 +1,8 @@
+import styles from "./styles.module.css";
+
 export function Error404() {
   return (
-    <section className="text-center font-semibold opacity-80 mt-5">
+    <section className={styles.container}>
       Página não encontrada =/ <br />
       Navegue para outra página.
     </section>

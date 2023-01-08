@@ -1,0 +1,7 @@
+.container {
+  @apply flex flex-col gap-20 pb-8;
+}
+
+.mainContent {
+  @apply bg-gray-100 max-w-[1220px] w-full mx-auto p-3 md:p-6 pb-8 shadow-sm border-t-2 border-b-2 lg:border-2 border-gray-200;
+}

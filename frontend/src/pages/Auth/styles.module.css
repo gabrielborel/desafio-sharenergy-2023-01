@@ -1,0 +1,51 @@
+.container {
+  @apply flex items-center justify-center h-screen flex-col gap-10 -mt-12;
+}
+
+.logo {
+  @apply w-[260px] h-8 sm:w-[300px] sm:h-12 md:w-[400px] md:h-16;
+}
+
+.authForm {
+  @apply max-w-[450px] w-full mx-auto px-2;
+}
+
+.inputLabel {
+  @apply block mb-2 text-sm md:text-base font-medium text-gray-900;
+}
+
+.inputLabelError {
+  @apply block mb-2 text-sm font-medium text-red-700;
+}
+
+.input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm md:text-base rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm;
+}
+
+.inputError {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5;
+}
+
+.errorMessage {
+  @apply mt-2 text-sm text-red-600;
+}
+
+.showPasswordBtn {
+  @apply absolute right-5 top-[30%] opacity-50 hover:opacity-70 transition-opacity;
+}
+
+.rememberMeContainer {
+  @apply flex items-center mb-6;
+}
+
+.rememberMeInput {
+  @apply w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-2 focus:ring-green-300;
+}
+
+.rememberMeLabel {
+  @apply ml-2 text-sm md:text-base font-medium text-gray-900 dark:text-gray-300;
+}
+
+.submitBtn {
+  @apply bg-green-500 flex items-center justify-center text-white disabled:opacity-70 disabled:cursor-not-allowed hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm md:text-base w-full sm:w-[76px] sm:h-[36px] px-5 py-2.5 text-center transition-colors !important;
+}

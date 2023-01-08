@@ -1,0 +1,15 @@
+.container {
+  @apply ml-auto w-fit flex flex-col-reverse sm:flex-row mt-8 justify-between items-center sm:gap-6;
+}
+
+.totalContainer {
+  @apply mr-auto;
+}
+
+.pagesIndicatorContainer {
+  @apply flex gap-2;
+}
+
+.morePages {
+  @apply text-gray-300 w-8 text-center;
+}

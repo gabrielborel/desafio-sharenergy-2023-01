@@ -1,4 +1,5 @@
-import { PaginationItem } from "./PaginationItem";
+import { PaginationItem } from "./components/PaginationItem";
+import styles from "./styles.module.css";
 
 interface PaginationProps {
   totalCountOfRegisters: number;
@@ -37,8 +38,8 @@ export function Pagination({
       : [];
 
   return (
-    <div className="ml-auto w-fit flex flex-col-reverse sm:flex-row mt-8 justify-between items-center md:gap-6">
-      <div className="mr-auto">
+    <div className={styles.container}>
+      <div className={styles.totalContainer}>
         <strong>
           {currentPage === 1 ? 0 : (currentPage - 1) * registersPerPages + 1}
         </strong>{" "}
@@ -51,12 +52,12 @@ export function Pagination({
         de <strong>{totalCountOfRegisters}</strong>
       </div>
 
-      <div className="flex gap-2">
+      <div className={styles.pagesIndicatorContainer}>
         {currentPage > siblingsCount + 1 && (
           <>
             <PaginationItem onPageChange={onPageChange} number={1} />
             {currentPage > 2 + siblingsCount && (
-              <span className="text-gray-300 w-8 text-center">...</span>
+              <span className={styles.morePages}>...</span>
             )}
           </>
         )}
@@ -88,7 +89,7 @@ export function Pagination({
         {currentPage + siblingsCount < lastPage && (
           <>
             {currentPage + 1 + siblingsCount < lastPage && (
-              <span className="text-gray-300 w-8 text-center">...</span>
+              <span className={styles.morePages}>...</span>
             )}
             <PaginationItem onPageChange={onPageChange} number={lastPage} />
           </>

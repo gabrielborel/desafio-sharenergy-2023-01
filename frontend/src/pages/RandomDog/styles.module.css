@@ -1,0 +1,19 @@
+.container {
+  @apply min-h-[540px] max-w-[440px] mx-auto;
+}
+
+.title {
+  @apply my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center;
+}
+
+.description {
+  @apply text-base text-gray-900 dark:text-white mb-2;
+}
+
+.imageBtn {
+  @apply text-white bg-green-700 disabled:opacity-50 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium transition-colors rounded-md text-base px-5 py-2 text-center flex gap-2 mt-8 items-center mx-auto min-w-[180px] justify-evenly !important;
+}
+
+.dogImage {
+  @apply w-full rounded-sm mt-8;
+}

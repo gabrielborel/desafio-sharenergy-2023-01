@@ -1,3 +1,5 @@
+import styles from "./styles.module.css";
+
 interface PaginationItemProps {
   isCurrent?: boolean;
   number: number;
@@ -10,16 +12,12 @@ export function PaginationItem({
   onPageChange,
 }: PaginationItemProps) {
   if (isCurrent) {
-    return (
-      <button className="pointer w-8 text-base bg-gray-200 p-1 rounded-md text-green-500">
-        {number}
-      </button>
-    );
+    return <button className={styles.activePaginationItem}>{number}</button>;
   }
 
   return (
     <button
-      className="pointer hover:bg-gray-300 w-8 text-base bg-gray-200 transition-colors p-1 rounded-md text-gray-700"
+      className={styles.paginationItem}
       onClick={() => onPageChange(number)}
     >
       {number}

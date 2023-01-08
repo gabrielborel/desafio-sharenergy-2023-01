@@ -1,0 +1,15 @@
+.container {
+  @apply hidden md:block text-base font-medium text-center text-gray-500;
+}
+
+.navList {
+  @apply flex flex-wrap -mb-px gap-2;
+}
+
+.navItem {
+  @apply inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300;
+}
+
+.activeNavItem {
+  @apply inline-block p-4 border-b-2 border-transparent rounded-t-lg border-green-600 text-green-600 hover:text-green-600 hover:border-green-600;
+}

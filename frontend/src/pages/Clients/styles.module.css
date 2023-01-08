@@ -1,0 +1,35 @@
+.container {
+  @apply min-h-[540px] flex flex-col;
+}
+
+.title {
+  @apply my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center;
+}
+
+.clientsContainer {
+  @apply mt-6 flex flex-1 flex-wrap gap-4 justify-evenly;
+}
+
+.clientCard {
+  @apply max-w-xs max-h-[190px] w-full p-6 pb-4 bg-white border border-gray-200 rounded-md hover:-translate-y-1 transition-transform shadow-md;
+}
+
+.clientName {
+  @apply text-2xl mb-1 font-semibold tracking-tight text-gray-900;
+}
+
+.clientStat {
+  @apply font-normal text-gray-600 dark:text-gray-400;
+}
+
+.clientActions {
+  @apply mt-4 flex justify-between;
+}
+
+.removeClientBtn {
+  @apply inline-flex gap-1 items-center text-red-600 p-1 py-0 rounded-sm hover:bg-red-100 transition-colors;
+}
+
+.clientNotFound {
+  @apply text-center text-gray-900;
+}

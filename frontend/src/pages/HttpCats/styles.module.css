@@ -1,0 +1,39 @@
+.container {
+  @apply min-h-[540px] max-w-[440px] mx-auto;
+}
+
+.title {
+  @apply my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl text-center;
+}
+
+.description {
+  @apply text-base text-gray-900 dark:text-white mb-2;
+}
+
+.label {
+  @apply mb-2 text-sm font-medium text-gray-900 sr-only;
+}
+
+.inputContainer {
+  @apply relative flex;
+}
+
+.input {
+  @apply block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500;
+}
+
+.inputError {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-4 pl-10;
+}
+
+.submitBtn {
+  @apply text-white absolute right-2.5 bottom-2.5 w-[76px] h-[36px] flex items-center justify-center bg-green-700 disabled:opacity-50 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 !important;
+}
+
+.errorMessage {
+  @apply mt-2 text-sm text-red-600 dark:text-red-500;
+}
+
+.catImage {
+  @apply w-full rounded-sm mt-4;
+}

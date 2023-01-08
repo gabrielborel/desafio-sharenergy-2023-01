@@ -1,12 +1,13 @@
-import { Trash } from "phosphor-react";
+import { StripeLogo, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { api } from "../api/axios";
-import { CreateClient } from "../components/CreateClient";
-import { Pagination } from "../components/Pagination";
-import { Toast } from "../components/Toast";
-import { UpdateClient } from "../components/UpdateClient";
-import { useToken } from "../contexts/TokenContext";
-import { LOADING_SPEED, wait } from "../helpers/Wait";
+import { api } from "../../api/axios";
+import { CreateClient } from "../../components/CreateClient";
+import { Pagination } from "../../components/Pagination";
+import { Toast } from "../../components/Toast";
+import { UpdateClient } from "../../components/UpdateClient";
+import { useToken } from "../../contexts/TokenContext";
+import { LOADING_SPEED, wait } from "../../helpers/Wait";
+import styles from "./styles.module.css";
 
 export interface Client {
   id?: string;
@@ -87,7 +88,7 @@ export function Clients() {
   const paginatedClients = clients.slice(beginIndex, endIndex);
 
   return (
-    <section className="min-h-[540px] flex flex-col">
+    <section className={styles.container}>
       <Toast
         open={openToast.open}
         onClose={handleCloseToast}
@@ -95,9 +96,7 @@ export function Clients() {
         status={openToast.status}
       />
 
-      <h1 className="my-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white text-center">
-        Clientes
-      </h1>
+      <h1 className={styles.title}>Clientes</h1>
 
       <CreateClient
         handleOpenToast={handleOpenToast}
@@ -105,7 +104,7 @@ export function Clients() {
         handleAddClient={addClient}
       />
 
-      <div className="mt-6 flex flex-1 flex-wrap gap-4 justify-evenly">
+      <div className={styles.clientsContainer}>
         {paginatedClients.length ? (
           paginatedClients.map((client) => {
             const cpf = `${client.cpf.slice(0, 3)}.${client.cpf.slice(
@@ -125,23 +124,17 @@ export function Clients() {
                   )}`;
 
             return (
-              <div className="max-w-xs max-h-[190px] w-full p-6 pb-4 bg-white border border-gray-200 rounded-md hover:-translate-y-1 transition-transform shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <h5 className="text-2xl mb-1 font-semibold tracking-tight text-gray-900 dark:text-white">
-                  {client.name}
-                </h5>
-                <p className="font-normal text-gray-600 dark:text-gray-400">
-                  {client.email}
-                </p>
+              <div className={styles.clientCard} key={client.id}>
+                <h5 className={styles.clientName}>{client.name}</h5>
+                <p className={styles.clientStat}>{client.email}</p>
 
-                <p className="font-normal text-gray-600 dark:text-gray-400">
+                <p className={styles.clientStat}>
                   {cellphone} • {cpf}
                 </p>
 
-                <p className="font-normal mb-1 text-gray-600 dark:text-gray-400">
-                  {client.address}
-                </p>
+                <p className={styles.clientStat}>{client.address}</p>
 
-                <div className="mt-3 flex justify-between">
+                <div className={styles.clientActions}>
                   <UpdateClient
                     clientId={client.id!}
                     handleOpenToast={handleOpenToast}
@@ -151,7 +144,7 @@ export function Clients() {
 
                   <button
                     onClick={() => removeClient(client.id!)}
-                    className="inline-flex gap-1 items-center text-red-600 p-1 py-0 rounded-sm hover:bg-red-100 transition-colors"
+                    className={styles.removeClientBtn}
                   >
                     <Trash size={18} /> Remover
                   </button>
@@ -160,7 +153,7 @@ export function Clients() {
             );
           })
         ) : (
-          <p className="text-center text-gray-900">
+          <p className={styles.clientNotFound}>
             Não existe nenhum cliente cadastrado =/
           </p>
         )}

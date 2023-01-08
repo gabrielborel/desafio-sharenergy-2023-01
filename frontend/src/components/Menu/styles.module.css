@@ -1,0 +1,11 @@
+.hamburguerBtn {
+  @apply hover:text-green-500 transition-colors;
+}
+
+.menuList {
+  @apply md:hidden min-w-[150px] p-3 rounded-md bg-white shadow-md;
+}
+
+.activeMenuItem {
+  @apply text-green-600;
+}

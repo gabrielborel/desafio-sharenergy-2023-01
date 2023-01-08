@@ -1,0 +1,27 @@
+.container {
+  @apply w-full mx-auto max-w-xs bg-white border py-2 pt-4 border-gray-200 rounded-lg shadow-md;
+}
+
+.content {
+  @apply flex flex-col items-center pb-2;
+}
+
+.userImage {
+  @apply w-24 h-24 mb-3 rounded-full shadow-lg;
+}
+
+.userName {
+  @apply mb-1 text-xl font-medium text-gray-900;
+}
+
+.userEmail {
+  @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.usernameAndAgeContainer {
+  @apply flex mt-4 space-x-3;
+}
+
+.usernameAndAge {
+  @apply inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black border-2 border-green-500 rounded-lg;
+}
