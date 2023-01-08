@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
 
 const clientSchema = new mongoose.Schema({
   name: { type: String, required: true },
