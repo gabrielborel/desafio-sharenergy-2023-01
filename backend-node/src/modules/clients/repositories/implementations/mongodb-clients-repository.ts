@@ -1,17 +1,7 @@
 import { clientModel } from "./../../schemas/client";
 import { IClientsRepository } from "../clients-repository";
 import { Client } from "../../entities/client";
-import { ObjectId } from "mongodb";
 import { ClientMapper } from "../../mappers/client-mapper";
-
-export interface MongodbClient {
-  _id: ObjectId;
-  name: string;
-  email: string;
-  cpf: string;
-  cellphone: string;
-  address: string;
-}
 
 export class MongodbClientsRepository implements IClientsRepository {
   async create(client: Client): Promise<Client> {

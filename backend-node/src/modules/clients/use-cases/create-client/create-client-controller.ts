@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Error } from "mongoose";
 import { container } from "tsyringe";
 import { AppError } from "../../../../shared/errors/AppError";
 import { CreateClientUseCase } from "./create-client-use-case";
