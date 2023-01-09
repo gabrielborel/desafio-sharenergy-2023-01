@@ -11,6 +11,7 @@ import (
 type IClientsUseCases interface {
 	CreateClient(client *domain.Client) (*domain.Client, *models.Error)
 	FindById(id string) (*domain.Client, *models.Error)
+	FindAll() ([]*domain.Client, *models.Error)
 }
 
 type ClientsUseCase struct {
@@ -70,4 +71,18 @@ func (c ClientsUseCase) FindById(id string) (*domain.Client, *models.Error) {
 	}
 
 	return clientFound, nil
+}
+
+func (c ClientsUseCase) FindAll() ([]*domain.Client, *models.Error) {
+	allClients, err := c.clientsRepository.FindAll()
+	if err != nil {
+		return nil, &models.Error{
+			Code:    500,
+			Name:    "SERVER_ERROR",
+			Message: "Something went wrong",
+			Error:   err,
+		}
+	}
+
+	return allClients, nil
 }
