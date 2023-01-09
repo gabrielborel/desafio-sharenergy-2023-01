@@ -12,6 +12,7 @@ type IClientsUseCases interface {
 	CreateClient(client *domain.Client) (*domain.Client, *models.Error)
 	FindById(id string) (*domain.Client, *models.Error)
 	FindAll() ([]*domain.Client, *models.Error)
+	DeleteClient(id string) (bool, *models.Error)
 }
 
 type ClientsUseCase struct {
@@ -85,4 +86,18 @@ func (c ClientsUseCase) FindAll() ([]*domain.Client, *models.Error) {
 	}
 
 	return allClients, nil
+}
+
+func (c ClientsUseCase) DeleteClient(id string) (bool, *models.Error) {
+	deleted, err := c.clientsRepository.DeleteClient(id)
+	if err != nil {
+		return false, &models.Error{
+			Code:    500,
+			Name:    "SERVER_ERROR",
+			Message: "Something went wrong",
+			Error:   err,
+		}
+	}
+
+	return deleted, nil
 }
