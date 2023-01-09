@@ -1,7 +1,6 @@
 package usecases
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -47,14 +46,12 @@ func (a AuthenticateUseCase) Authenticate(username, password string) (string, *m
 		}
 	}
 
-	expiration := time.Duration(int64(time.Minute) * expiresAt)
+	expiration := time.Duration(int64(time.Minute) * (expiresAt * 60 * 24))
 
 	claims := token.Claims.(jwt.MapClaims)
 	claims["exp"] = time.Now().Add(expiration).Unix()
 	t, err := token.SignedString([]byte(a.cfg.JwtSecret))
-	fmt.Println(t)
 	if err != nil {
-		fmt.Println(err.Error())
 		return "", &models.Error{
 			Code:    400,
 			Name:    "BAD_REQUEST",
