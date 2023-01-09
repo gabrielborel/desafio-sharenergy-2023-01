@@ -23,6 +23,15 @@ func NewCatsUseCase(cfg *config.Settings) ICatsUseCase {
 
 func (d CatsUseCase) GetCatImageByStatusCode(code string) (string, *models.Error) {
 	res, err := http.Get("https://http.cat/" + code)
+	if res.StatusCode != 200 {
+		return "", &models.Error{
+			Code:    res.StatusCode,
+			Name:    "SERVER_ERROR",
+			Message: err.Error(),
+			Error:   err,
+		}
+	}
+
 	if err != nil {
 		return "", &models.Error{
 			Code:    res.StatusCode,

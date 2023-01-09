@@ -68,7 +68,7 @@ func (c ClientsRepository) CpfAlreadyInUse(cpf string) (bool, error) {
 		if err == mongo.ErrNoDocuments {
 			return false, nil
 		}
-		return false, errors.Wrap(err, "Error ao procurar por email")
+		return false, errors.Wrap(err, "Error ao procurar por cpf")
 	}
 
 	return true, nil

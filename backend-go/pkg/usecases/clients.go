@@ -43,7 +43,24 @@ func (c ClientsUseCase) CreateClient(client *domain.Client) (*domain.Client, *mo
 		return nil, &models.Error{
 			Code:    400,
 			Name:    "EMAIL_TAKEN",
-			Message: "Email already in use",
+			Message: "Email já está em uso.",
+		}
+	}
+
+	cpfAlreadyInUse, err := c.clientsRepository.CpfAlreadyInUse(client.Cpf)
+	if err != nil {
+		return nil, &models.Error{
+			Code:    500,
+			Name:    "SERVER_ERROR",
+			Message: "Something went wrong",
+			Error:   err,
+		}
+	}
+	if cpfAlreadyInUse {
+		return nil, &models.Error{
+			Code:    400,
+			Name:    "EMAIL_TAKEN",
+			Message: "Cpf já está em uso.",
 		}
 	}
 
