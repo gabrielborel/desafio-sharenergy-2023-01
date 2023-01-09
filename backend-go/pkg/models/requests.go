@@ -130,10 +130,10 @@ func ValidateRegisterClientRequest(c echo.Context) (*domain.Client, *Error) {
 	}, nil
 }
 
-func ValidateAuthenticateRequest(c echo.Context) (bool, *Error) {
+func ValidateAuthenticateRequest(c echo.Context) (map[string]interface{}, *Error) {
 	authRequest := new(AuthenticateRequest)
 	if err := c.Bind(authRequest); err != nil {
-		return false, BindError()
+		return nil, BindError()
 	}
 
 	var validationErrors []string
@@ -147,10 +147,13 @@ func ValidateAuthenticateRequest(c echo.Context) (bool, *Error) {
 	}
 
 	if len(validationErrors) > 0 {
-		return false, ValidationError(validationErrors)
+		return nil, ValidationError(validationErrors)
 	}
 
-	return true, nil
+	return map[string]interface{}{
+		"username": authRequest.Username,
+		"password": authRequest.Password,
+	}, nil
 }
 
 func validateEmail(address string) (string, bool) {
