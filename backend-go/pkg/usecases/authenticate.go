@@ -37,7 +37,7 @@ func (a AuthenticateUseCase) Authenticate(username, password string) (string, *m
 	}
 
 	token := jwt.New(jwt.SigningMethodHS256)
-	expiresIn, err := strconv.ParseInt(a.cfg.JwtExpires, 10, 64)
+	expiresAt, err := strconv.ParseInt(a.cfg.JwtExpires, 10, 64)
 	if err != nil {
 		return "", &models.Error{
 			Code:    400,
@@ -47,11 +47,11 @@ func (a AuthenticateUseCase) Authenticate(username, password string) (string, *m
 		}
 	}
 
-	expiration := time.Duration(int64(time.Minute) * expiresIn)
+	expiration := time.Duration(int64(time.Minute) * expiresAt)
 
 	claims := token.Claims.(jwt.MapClaims)
 	claims["exp"] = time.Now().Add(expiration).Unix()
-	t, err := token.SignedString([]byte("hahahah"))
+	t, err := token.SignedString([]byte(a.cfg.JwtSecret))
 	fmt.Println(t)
 	if err != nil {
 		fmt.Println(err.Error())

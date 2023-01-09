@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/gabrielborel/desafio-sharenergy-2023-01/backend-go/pkg/config"
@@ -32,7 +32,7 @@ func (u UsersUseCase) GetRandomUsers() (interface{}, *models.Error) {
 		}
 	}
 
-	data, err := ioutil.ReadAll(res.Body)
+	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		return "", &models.Error{
 			Code:    res.StatusCode,
