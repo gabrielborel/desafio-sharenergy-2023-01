@@ -22,6 +22,7 @@ type App struct {
 func New(cfg *config.Settings, client *mongo.Client) *App {
 	server := echo.New()
 	server.Use(middleware.Recover())
+	server.Use(middleware.CORS())
 
 	clientsRepo := data.NewClientsRepository(cfg, client)
 	clientsUseCase := usecases.NewClientsUseCases(cfg, clientsRepo)

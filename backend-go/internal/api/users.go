@@ -12,5 +12,5 @@ func (a App) GetRandomUsers(c echo.Context) error {
 		return c.JSON(err.Code, err.Message)
 	}
 
-	return c.JSON(http.StatusFound, users)
+	return c.JSON(http.StatusOK, users)
 }

@@ -66,8 +66,8 @@ func ValidateUpdateClientRequest(c echo.Context) (*UpdateClientRequest, *Error) 
 	}
 
 	if updateClientRequest.Address != "" {
-		if len(updateClientRequest.Address) < 20 || len(updateClientRequest.Address) > 70 {
-			validationErrors = append(validationErrors, "Endereço deve ter entre 20 e 70 dígitos.")
+		if len(updateClientRequest.Address) < 10 || len(updateClientRequest.Address) > 70 {
+			validationErrors = append(validationErrors, "Endereço deve ter entre 10 e 70 dígitos.")
 		}
 	}
 
@@ -113,8 +113,8 @@ func ValidateRegisterClientRequest(c echo.Context) (*domain.Client, *Error) {
 		validationErrors = append(validationErrors, "Telefone deve ter entre 9 e 11 dígitos.")
 	}
 
-	if len(registerClientRequest.Address) < 20 || len(registerClientRequest.Address) > 70 {
-		validationErrors = append(validationErrors, "Endereço deve ter entre 20 e 70 dígitos.")
+	if len(registerClientRequest.Address) < 10 || len(registerClientRequest.Address) > 70 {
+		validationErrors = append(validationErrors, "Endereço deve ter entre 10 e 70 dígitos.")
 	}
 
 	if len(validationErrors) > 0 {

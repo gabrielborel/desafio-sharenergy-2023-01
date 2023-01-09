@@ -12,5 +12,5 @@ func (a App) GetRandomDogImage(c echo.Context) error {
 		return c.JSON(err.Code, err.Message)
 	}
 
-	return c.JSON(http.StatusFound, image)
+	return c.JSON(http.StatusOK, image)
 }

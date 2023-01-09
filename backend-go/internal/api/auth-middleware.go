@@ -15,7 +15,6 @@ type Middleware struct {
 
 func (m Middleware) Auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-
 		tokenString := c.Request().Header.Get("Authorization")
 		sanitizedToken := strings.ReplaceAll(tokenString, "Bearer ", "")
 		if tokenString == "" {

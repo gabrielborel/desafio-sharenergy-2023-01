@@ -154,5 +154,7 @@ func (c ClientsRepository) UpdateClient(id string, client *models.UpdateClientRe
 		return nil, errors.Wrap(err, "Erro ao atualizar cliente")
 	}
 
+	updatedClient, _ = c.FindById(id)
+
 	return updatedClient, nil
 }

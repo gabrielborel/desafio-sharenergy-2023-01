@@ -29,7 +29,7 @@ func (a App) FindById(c echo.Context) error {
 		return c.JSON(err.Code, err)
 	}
 
-	return c.JSON(http.StatusFound, client)
+	return c.JSON(http.StatusOK, client)
 }
 
 func (a App) FindAll(c echo.Context) error {
@@ -38,7 +38,7 @@ func (a App) FindAll(c echo.Context) error {
 		return c.JSON(err.Code, err)
 	}
 
-	return c.JSON(http.StatusFound, clients)
+	return c.JSON(http.StatusOK, clients)
 }
 
 func (a App) Delete(c echo.Context) error {
