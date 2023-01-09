@@ -40,3 +40,14 @@ func (a App) FindAll(c echo.Context) error {
 
 	return c.JSON(http.StatusFound, clients)
 }
+
+func (a App) Delete(c echo.Context) error {
+	id := c.Param("id")
+
+	client, err := a.clientsUseCases.DeleteClient(id)
+	if err != nil {
+		return c.JSON(err.Code, err)
+	}
+
+	return c.JSON(http.StatusCreated, client)
+}
