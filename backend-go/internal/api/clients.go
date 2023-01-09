@@ -31,3 +31,12 @@ func (a App) FindById(c echo.Context) error {
 
 	return c.JSON(http.StatusFound, client)
 }
+
+func (a App) FindAll(c echo.Context) error {
+	clients, err := a.clientsUseCases.FindAll()
+	if err != nil {
+		return c.JSON(err.Code, err)
+	}
+
+	return c.JSON(http.StatusFound, clients)
+}

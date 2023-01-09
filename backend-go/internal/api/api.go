@@ -26,6 +26,7 @@ func New(cfg *config.Settings, client *mongo.Client) *App {
 }
 
 func (a App) ConfigureRoutes() {
+	a.server.GET("/clients", a.FindAll)
 	a.server.POST("/clients", a.Create)
 	a.server.GET("/clients/:id", a.FindById)
 }
