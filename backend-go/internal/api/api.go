@@ -11,12 +11,12 @@ import (
 
 type App struct {
 	server              *echo.Echo
+	cfg                 *config.Settings
 	clientsUseCases     usecases.IClientsUseCases
 	authenticateUseCase usecases.IAuthenticateUseCase
 	dogsUseCase         usecases.IDogsUseCase
 	usersUseCase        usecases.IUsersUseCase
 	catsUseCase         usecases.ICatsUseCase
-	cfg                 *config.Settings
 }
 
 func New(cfg *config.Settings, client *mongo.Client) *App {
@@ -32,25 +32,30 @@ func New(cfg *config.Settings, client *mongo.Client) *App {
 
 	return &App{
 		server,
+		cfg,
 		clientsUseCase,
 		authenticateUseCase,
 		dogsUseCase,
 		usersUseCase,
 		catsUseCase,
-		cfg,
 	}
 }
 
 func (a App) ConfigureRoutes() {
-	a.server.GET("/clients", a.FindAll)
-	a.server.POST("/clients", a.Create)
-	a.server.GET("/clients/:id", a.FindById)
-	a.server.DELETE("/clients/:id", a.Delete)
-	a.server.PUT("/clients/:id", a.Update)
 	a.server.POST("/authenticate", a.Authenticate)
-	a.server.GET("/dogs", a.GetRandomDogImage)
-	a.server.GET("/users", a.GetRandomUsers)
-	a.server.GET("/cats/:code", a.GetCatImageByStatusCode)
+
+	protected := a.server.Group("/")
+	middleware := Middleware{config: a.cfg}
+	protected.Use(middleware.Auth)
+
+	protected.GET("clients", a.FindAll)
+	protected.POST("clients", a.Create)
+	protected.GET("clients/:id", a.FindById)
+	protected.DELETE("clients/:id", a.Delete)
+	protected.PUT("clients/:id", a.Update)
+	protected.GET("dogs", a.GetRandomDogImage)
+	protected.GET("users", a.GetRandomUsers)
+	protected.GET("cats/:code", a.GetCatImageByStatusCode)
 }
 
 func (a App) Start() {
