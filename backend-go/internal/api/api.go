@@ -13,6 +13,9 @@ type App struct {
 	server              *echo.Echo
 	clientsUseCases     usecases.IClientsUseCases
 	authenticateUseCase usecases.IAuthenticateUseCase
+	dogsUseCase         usecases.IDogsUseCase
+	usersUseCase        usecases.IUsersUseCase
+	catsUseCase         usecases.ICatsUseCase
 	cfg                 *config.Settings
 }
 
@@ -23,8 +26,19 @@ func New(cfg *config.Settings, client *mongo.Client) *App {
 	clientsRepo := data.NewClientsRepository(cfg, client)
 	clientsUseCase := usecases.NewClientsUseCases(cfg, clientsRepo)
 	authenticateUseCase := usecases.NewAuthenticateUseCase(cfg)
+	dogsUseCase := usecases.NewDogsUseCase(cfg)
+	usersUseCase := usecases.NewUsersUseCase(cfg)
+	catsUseCase := usecases.NewCatsUseCase(cfg)
 
-	return &App{server, clientsUseCase, authenticateUseCase, cfg}
+	return &App{
+		server,
+		clientsUseCase,
+		authenticateUseCase,
+		dogsUseCase,
+		usersUseCase,
+		catsUseCase,
+		cfg,
+	}
 }
 
 func (a App) ConfigureRoutes() {
@@ -34,6 +48,9 @@ func (a App) ConfigureRoutes() {
 	a.server.DELETE("/clients/:id", a.Delete)
 	a.server.PUT("/clients/:id", a.Update)
 	a.server.POST("/authenticate", a.Authenticate)
+	a.server.GET("/dogs", a.GetRandomDogImage)
+	a.server.GET("/users", a.GetRandomUsers)
+	a.server.GET("/cats/:code", a.GetCatImageByStatusCode)
 }
 
 func (a App) Start() {
