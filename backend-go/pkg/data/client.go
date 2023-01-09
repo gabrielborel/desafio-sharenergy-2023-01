@@ -5,6 +5,7 @@ import (
 
 	"github.com/gabrielborel/desafio-sharenergy-2023-01/backend-go/pkg/config"
 	"github.com/gabrielborel/desafio-sharenergy-2023-01/backend-go/pkg/domain"
+	"github.com/gabrielborel/desafio-sharenergy-2023-01/backend-go/pkg/models"
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -18,7 +19,7 @@ type IClientsRepository interface {
 	FindById(id string) (*domain.Client, error)
 	FindAll() ([]*domain.Client, error)
 	DeleteClient(id string) (bool, error)
-	UpdateClient(client *domain.Client) (*domain.Client, error)
+	UpdateClient(id string, client *models.UpdateClientRequest) (*domain.Client, error)
 }
 
 type ClientsRepository struct {
@@ -135,12 +136,16 @@ func (c ClientsRepository) DeleteClient(id string) (bool, error) {
 	return true, nil
 }
 
-func (c ClientsRepository) UpdateClient(client *domain.Client) (*domain.Client, error) {
+func (c ClientsRepository) UpdateClient(id string, client *models.UpdateClientRequest) (*domain.Client, error) {
 	var updatedClient *domain.Client
 
-	filter := bson.D{primitive.E{Key: "email", Value: client.Email}}
-	err := c.clientCollection.FindOneAndUpdate(c.ctx, filter, client).Decode(&updatedClient)
+	clientToBeUpdated, err := c.FindById(id)
+	if err != nil {
+		return nil, errors.Wrap(err, "Cliente não encontrado")
+	}
 
+	filter := bson.D{primitive.E{Key: "email", Value: clientToBeUpdated.Email}}
+	err = c.clientCollection.FindOneAndUpdate(c.ctx, filter, bson.M{"$set": client}).Decode(&updatedClient)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, nil
