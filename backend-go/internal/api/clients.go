@@ -51,3 +51,18 @@ func (a App) Delete(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, client)
 }
+
+func (a App) Update(c echo.Context) error {
+	id := c.Param("id")
+	clientToUpdate, err := models.ValidateUpdateClientRequest(c)
+	if err != nil {
+		return c.JSON(err.Code, err)
+	}
+
+	client, err := a.clientsUseCases.UpdateClient(id, clientToUpdate)
+	if err != nil {
+		return c.JSON(err.Code, err)
+	}
+
+	return c.JSON(http.StatusCreated, client)
+}

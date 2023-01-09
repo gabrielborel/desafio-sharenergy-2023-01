@@ -30,6 +30,7 @@ func (a App) ConfigureRoutes() {
 	a.server.POST("/clients", a.Create)
 	a.server.GET("/clients/:id", a.FindById)
 	a.server.DELETE("/clients/:id", a.Delete)
+	a.server.PUT("/clients/:id", a.Update)
 }
 
 func (a App) Start() {
