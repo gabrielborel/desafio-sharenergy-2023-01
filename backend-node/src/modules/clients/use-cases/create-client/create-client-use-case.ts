@@ -15,13 +15,11 @@ export class CreateClientUseCase {
     const { address, cellphone, cpf, email, name } = data;
 
     const emailAlreadyExists = await this.clientsRepository.findByEmail(email);
-
     if (emailAlreadyExists) {
       throw new AppError(400, "Email já está em uso.");
     }
 
     const cpfAlreadyExists = await this.clientsRepository.findByCpf(cpf);
-
     if (cpfAlreadyExists) {
       throw new AppError(400, "CPF já está em uso.");
     }
