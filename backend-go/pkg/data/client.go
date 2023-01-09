@@ -113,7 +113,12 @@ func (c ClientsRepository) FindAll() ([]*domain.Client, error) {
 }
 
 func (c ClientsRepository) DeleteClient(id string) (bool, error) {
-	filter := bson.D{primitive.E{Key: "id", Value: id}}
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return false, errors.Wrap(err, "Id inválido")
+	}
+
+	filter := bson.D{primitive.E{Key: "_id", Value: objectId}}
 	res, err := c.clientCollection.DeleteOne(c.ctx, filter)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
