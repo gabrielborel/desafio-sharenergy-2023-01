@@ -75,7 +75,6 @@ export function Auth() {
         });
 
         wait(LOADING_SPEED.MEDIUM).then(() => {
-          console.log("eah");
           navigate("/");
         });
       } catch (err: any) {

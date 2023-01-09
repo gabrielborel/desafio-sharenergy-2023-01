@@ -29,9 +29,7 @@ export function RandomUsers() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    api
-      .get("https://randomuser.me/api/?results=52")
-      .then((res) => setUsers(res.data.results));
+    api.get("/users").then((res) => setUsers(res.data.results));
   }, []);
 
   function onPageChange(page: number) {
