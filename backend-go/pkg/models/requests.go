@@ -20,6 +20,70 @@ type AuthenticateRequest struct {
 	Password string `json:"password"`
 }
 
+type UpdateClientRequest struct {
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Cpf       string `json:"cpf"`
+	Cellphone string `json:"cellphone"`
+	Address   string `json:"address"`
+}
+
+func ValidateUpdateClientRequest(c echo.Context) (*UpdateClientRequest, *Error) {
+	updateClientRequest := new(UpdateClientRequest)
+	if err := c.Bind(updateClientRequest); err != nil {
+		return nil, BindError()
+	}
+
+	var validationErrors []string
+
+	if updateClientRequest.Name != "" {
+		if len(updateClientRequest.Name) < 5 {
+			validationErrors = append(validationErrors, "O nome deve ter no mínimo 5 caracteres.")
+		}
+
+		if len(updateClientRequest.Name) > 30 {
+			validationErrors = append(validationErrors, "O nome deve ter no máximo 30 caracteres.")
+		}
+	}
+
+	if updateClientRequest.Email != "" {
+		_, isValid := validateEmail(updateClientRequest.Email)
+		if !isValid {
+			validationErrors = append(validationErrors, "Email inválido")
+		}
+	}
+
+	if updateClientRequest.Cpf != "" {
+		if len(updateClientRequest.Cpf) != 11 {
+			validationErrors = append(validationErrors, "CPF deve ter 11 dígitos.")
+		}
+	}
+
+	if updateClientRequest.Cellphone != "" {
+		if len(updateClientRequest.Cellphone) > 11 || len(updateClientRequest.Cellphone) < 9 {
+			validationErrors = append(validationErrors, "Telefone deve ter entre 9 e 11 dígitos.")
+		}
+	}
+
+	if updateClientRequest.Address != "" {
+		if len(updateClientRequest.Address) < 20 || len(updateClientRequest.Address) > 70 {
+			validationErrors = append(validationErrors, "Endereço deve ter entre 20 e 70 dígitos.")
+		}
+	}
+
+	if len(validationErrors) > 0 {
+		return nil, ValidationError(validationErrors)
+	}
+
+	return &UpdateClientRequest{
+		Name:      updateClientRequest.Name,
+		Email:     updateClientRequest.Email,
+		Cpf:       updateClientRequest.Cpf,
+		Cellphone: updateClientRequest.Cellphone,
+		Address:   updateClientRequest.Address,
+	}, nil
+}
+
 func ValidateRegisterClientRequest(c echo.Context) (*domain.Client, *Error) {
 	registerClientRequest := new(RegisterClientRequest)
 	if err := c.Bind(registerClientRequest); err != nil {
