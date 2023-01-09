@@ -10,9 +10,10 @@ import (
 )
 
 type App struct {
-	server          *echo.Echo
-	clientsUseCases usecases.IClientsUseCases
-	cfg             *config.Settings
+	server              *echo.Echo
+	clientsUseCases     usecases.IClientsUseCases
+	authenticateUseCase usecases.IAuthenticateUseCase
+	cfg                 *config.Settings
 }
 
 func New(cfg *config.Settings, client *mongo.Client) *App {
@@ -21,8 +22,9 @@ func New(cfg *config.Settings, client *mongo.Client) *App {
 
 	clientsRepo := data.NewClientsRepository(cfg, client)
 	clientsUseCase := usecases.NewClientsUseCases(cfg, clientsRepo)
+	authenticateUseCase := usecases.NewAuthenticateUseCase(cfg)
 
-	return &App{server, clientsUseCase, cfg}
+	return &App{server, clientsUseCase, authenticateUseCase, cfg}
 }
 
 func (a App) ConfigureRoutes() {
@@ -31,6 +33,7 @@ func (a App) ConfigureRoutes() {
 	a.server.GET("/clients/:id", a.FindById)
 	a.server.DELETE("/clients/:id", a.Delete)
 	a.server.PUT("/clients/:id", a.Update)
+	a.server.POST("/authenticate", a.Authenticate)
 }
 
 func (a App) Start() {
