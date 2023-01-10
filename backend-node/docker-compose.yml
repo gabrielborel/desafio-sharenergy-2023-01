@@ -1,20 +1,41 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  mongodb_database:
-    image: mongo:latest
+  db:
+    image: mongo
+    restart: always
+    volumes:
+      - mongodb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
-      - "27017:27017"
+      - "${DB_PORT}:${DB_PORT}"
+    networks:
+      - network-backend
 
-  nodejs_app:
+  api:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
     depends_on:
-      - mongodb_database
+      - db
+    networks:
+      - network-backend
+
+  web:
+    build:
+      context: ../frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    networks:
+      - network-backend
+
+networks:
+  network-backend:
 
 volumes:
-  mongodb_data_container:
+  mongodb:

@@ -1,9 +1,9 @@
 FROM node
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
+COPY .env ./
 COPY package*.json ./
-
 COPY tsconfig.json ./
 
 RUN yarn
@@ -11,5 +11,4 @@ RUN yarn
 COPY . .
 
 EXPOSE 3000
-
 CMD ["yarn", "dev"]
