@@ -15,7 +15,7 @@ export class AuthenticateUseCase {
       throw new AppError(401, "Nome de usuário ou senha inválidos.");
     }
 
-    const token = sign({}, "92eb5ffee6ae2fec3ad71c777531578f", {
+    const token = sign({}, `${process.env.JWT_SECRET}`, {
       expiresIn: "7d",
     });
 
