@@ -10,9 +10,15 @@ export function RandomDogs() {
   const [image, setImage] = useState("");
 
   async function fetchRandomDogImage() {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
     setIsLoading(true);
 
-    const res = await api.get("/dogs");
+    const res = await api.get("/dogs", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     wait(LOADING_SPEED.FAST).then(() => {
       setImage(res.data);

@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { api } from "../../api/axios";
-import { useToken } from "../../contexts/TokenContext";
 import { Spinner } from "../icons/Spinner";
 import { Client } from "../../pages/Clients";
 import { LOADING_SPEED, wait } from "../../helpers/Wait";
@@ -64,9 +63,13 @@ export function UpdateClient({
   } = useForm<InputTypes>({ resolver: zodResolver(schema) });
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useToken();
 
   useEffect(() => {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
     api
       .get<Client>(`/clients/${clientId}`, {
         headers: {
@@ -84,6 +87,11 @@ export function UpdateClient({
   }, []);
 
   async function handleUpdateClient(data: Client) {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
     try {
       const res = await api.put(
         `/clients/${clientId}`,

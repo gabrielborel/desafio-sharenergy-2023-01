@@ -3,6 +3,7 @@ import { api } from "../../api/axios";
 import { SearchIcon } from "../../components/icons/Search";
 import { Pagination } from "../../components/Pagination";
 import { UserCard } from "../../components/UserCard";
+import { useToken } from "../../contexts/TokenContext";
 import styles from "./styles.module.css";
 
 export interface User {
@@ -29,7 +30,19 @@ export function RandomUsers() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    api.get("/users").then((res) => setUsers(res.data.results));
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
+    api
+      .get("/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setUsers(res.data.results || []);
+      })
+      .catch(console.log);
   }, []);
 
   function onPageChange(page: number) {

@@ -5,12 +5,12 @@ import { CreateClient } from "../../components/CreateClient";
 import { Pagination } from "../../components/Pagination";
 import { Toast } from "../../components/Toast";
 import { UpdateClient } from "../../components/UpdateClient";
-import { useToken } from "../../contexts/TokenContext";
 import { LOADING_SPEED, wait } from "../../helpers/Wait";
 import styles from "./styles.module.css";
 
 export interface Client {
   id?: string;
+  ID?: string;
   name: string;
   email: string;
   cpf: string;
@@ -20,7 +20,6 @@ export interface Client {
 
 export function Clients() {
   const [clients, setClients] = useState<Client[]>([]);
-  const { token: accessToken } = useToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [openToast, setOpenToast] = useState({
     open: false,
@@ -29,13 +28,18 @@ export function Clients() {
   });
 
   useEffect(() => {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
     api
       .get("/clients", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setClients(res.data))
+      .then((res) => setClients(res.data || []))
       .catch(console.error);
   }, []);
 
@@ -56,21 +60,42 @@ export function Clients() {
   }
 
   function addClient(client: Client) {
-    setClients((prev) => [...prev, client]);
+    setClients(() => [...clients, client]);
   }
 
   function updateClient(client: Client) {
-    setClients((prev) => prev.map((c) => (c.id === client.id ? client : c)));
+    setClients((prev) =>
+      prev.map((c) => {
+        if (c.ID) {
+          return c.ID === client.ID ? client : c;
+        } else {
+          return c.id === client.id ? client : c;
+        }
+      })
+    );
   }
 
-  function removeClient(id: string) {
-    api.delete(`/clients/${id}`, {
+  async function removeClient(id: string) {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
+    await api.delete(`/clients/${id}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    setClients((prev) => prev.filter((c) => c.id !== id));
+    setClients((prev) =>
+      prev.filter((c) => {
+        if (c.ID) {
+          return c.ID !== id;
+        } else {
+          return c.id !== id;
+        }
+      })
+    );
 
     setOpenToast({
       open: true,
@@ -85,7 +110,7 @@ export function Clients() {
 
   const beginIndex = (currentPage - 1) * 6;
   const endIndex = currentPage * 6;
-  const paginatedClients = clients.slice(beginIndex, endIndex);
+  const paginatedClients = clients?.slice(beginIndex, endIndex);
 
   return (
     <section className={styles.container}>
@@ -105,20 +130,20 @@ export function Clients() {
       />
 
       <div className={styles.clientsContainer}>
-        {paginatedClients.length ? (
-          paginatedClients.map((client) => {
-            const cpf = `${client.cpf.slice(0, 3)}.${client.cpf.slice(
+        {paginatedClients?.length ? (
+          paginatedClients?.map((client) => {
+            const cpf = `${client.cpf?.slice(0, 3)}.${client.cpf?.slice(
               3,
               6
-            )}.${client.cpf.slice(6, 9)}-${client.cpf.slice(9, 11)}`;
+            )}.${client.cpf?.slice(6, 9)}-${client.cpf?.slice(9, 11)}`;
 
             const cellphone =
               client.cellphone.length === 11
-                ? `(${client.cellphone.slice(0, 2)}) ${client.cellphone.slice(
+                ? `(${client.cellphone?.slice(0, 2)}) ${client.cellphone?.slice(
                     2,
                     7
-                  )}-${client.cellphone.slice(7, 11)}`
-                : `${client.cellphone.slice(0, 5)}-${client.cellphone.slice(
+                  )}-${client.cellphone?.slice(7, 11)}`
+                : `${client.cellphone?.slice(0, 5)}-${client.cellphone?.slice(
                     5,
                     9
                   )}`;
@@ -136,14 +161,14 @@ export function Clients() {
 
                 <div className={styles.clientActions}>
                   <UpdateClient
-                    clientId={client.id!}
+                    clientId={client.id! || client.ID!}
                     handleOpenToast={handleOpenToast}
                     handleCloseToast={handleCloseToast}
                     handleSubstituteClient={updateClient}
                   />
 
                   <button
-                    onClick={() => removeClient(client.id!)}
+                    onClick={() => removeClient(client.id! || client.ID!)}
                     className={styles.removeClientBtn}
                   >
                     <Trash size={18} /> Remover
@@ -162,7 +187,7 @@ export function Clients() {
       <Pagination
         onPageChange={handlePageChange}
         currentPage={currentPage}
-        totalCountOfRegisters={clients.length}
+        totalCountOfRegisters={clients?.length}
       />
     </section>
   );

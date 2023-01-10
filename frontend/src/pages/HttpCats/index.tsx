@@ -36,20 +36,26 @@ export function HttpCats() {
     setIsLoading(true);
 
     try {
-      const { data } = await api.get(`/cats/${statusCode}`);
+      const token = JSON.parse(
+        (localStorage.getItem("@sharenergy-access_token") as string) ||
+          (sessionStorage.getItem("@sharenergy-access_token") as string)
+      );
+
+      const { data } = await api.get(`/cats/${statusCode}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       wait(LOADING_SPEED.FAST).then(() => {
         setImage(data);
-        console.log;
+        setIsLoading(false);
       });
-    } catch {
+    } catch (err) {
       wait(LOADING_SPEED.FAST).then(() => {
         setImage(IMAGE_FALLBACK);
         setError("statusCode", {
           message: "Nenhuma imagem encontrada com esse status code!",
         });
+        setIsLoading(false);
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 

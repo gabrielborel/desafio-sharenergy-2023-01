@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { Header } from "../../components/Header";
-import { useToken } from "../../contexts/TokenContext";
 import styles from "./styles.module.css";
 
 interface TokenInfo {
@@ -11,9 +10,13 @@ interface TokenInfo {
 
 export function Protected() {
   const navigate = useNavigate();
-  const { token, clearLocalToken, clearSessionToken } = useToken();
 
   useEffect(() => {
+    const token = JSON.parse(
+      (localStorage.getItem("@sharenergy-access_token") as string) ||
+        (sessionStorage.getItem("@sharenergy-access_token") as string)
+    );
+
     if (!token) {
       return navigate("/auth");
     }
@@ -24,8 +27,8 @@ export function Protected() {
     const tokenExpired = today > expiresDate;
 
     if (tokenExpired) {
-      clearLocalToken();
-      clearSessionToken();
+      localStorage.removeItem("@sharenergy-access_token");
+      sessionStorage.removeItem("@sharenergy-access_token");
       return navigate("/auth");
     }
   }, []);

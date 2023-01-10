@@ -8,7 +8,6 @@ import { Spinner } from "../../components/icons/Spinner";
 import { Toast } from "../../components/Toast";
 import { api } from "../../api/axios";
 import { useNavigate } from "react-router-dom";
-import { useToken } from "../../contexts/TokenContext";
 import styles from "./styles.module.css";
 import { LOADING_SPEED, wait } from "../../helpers/Wait";
 
@@ -39,8 +38,6 @@ export function Auth() {
     status: "",
     content: "",
   });
-  const { setLocalToken, setSessionToken, clearLocalToken } = useToken();
-
   const navigate = useNavigate();
 
   const handleCloseToast = () =>
@@ -62,10 +59,17 @@ export function Auth() {
         });
 
         if (data.rememberMe) {
-          setLocalToken(token);
+          localStorage.setItem(
+            "@sharenergy-access_token",
+            JSON.stringify(token)
+          );
+          sessionStorage.removeItem("@sharenergy-access_token");
         } else {
-          setSessionToken(token);
-          clearLocalToken();
+          sessionStorage.setItem(
+            "@sharenergy-access_token",
+            JSON.stringify(token)
+          );
+          localStorage.removeItem("@sharenergy-access_token");
         }
 
         setOpenToast({

@@ -51,5 +51,5 @@
 }
 
 .submitBtn {
-  @apply text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-md text-sm md:text-base w-full sm:w-auto px-5 py-1.5 text-center transition-colors;
+  @apply text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-md text-sm md:text-base w-full sm:w-auto px-5 py-1.5 text-center transition-colors !important;
 }
