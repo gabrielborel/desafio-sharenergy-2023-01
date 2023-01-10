@@ -3,7 +3,6 @@ import { api } from "../../api/axios";
 import { SearchIcon } from "../../components/icons/Search";
 import { Pagination } from "../../components/Pagination";
 import { UserCard } from "../../components/UserCard";
-import { useToken } from "../../contexts/TokenContext";
 import styles from "./styles.module.css";
 
 export interface User {

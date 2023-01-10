@@ -63,35 +63,27 @@ export function UpdateClient({
   } = useForm<InputTypes>({ resolver: zodResolver(schema) });
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const token = JSON.parse(
+    (localStorage.getItem("@sharenergy-access_token") as string) ||
+      (sessionStorage.getItem("@sharenergy-access_token") as string)
+  );
 
-  useEffect(() => {
-    const token = JSON.parse(
-      (localStorage.getItem("@sharenergy-access_token") as string) ||
-        (sessionStorage.getItem("@sharenergy-access_token") as string)
-    );
-
-    api
-      .get<Client>(`/clients/${clientId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setValue("name", res.data.name);
-        setValue("email", res.data.email);
-        setValue("cpf", res.data.cpf);
-        setValue("cellphone", res.data.cellphone);
-        setValue("address", res.data.address);
-      })
-      .catch(console.log);
-  }, []);
+  api
+    .get<Client>(`/clients/${clientId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      setValue("name", res.data.name);
+      setValue("email", res.data.email);
+      setValue("cpf", res.data.cpf);
+      setValue("cellphone", res.data.cellphone);
+      setValue("address", res.data.address);
+    })
+    .catch(console.log);
 
   async function handleUpdateClient(data: Client) {
-    const token = JSON.parse(
-      (localStorage.getItem("@sharenergy-access_token") as string) ||
-        (sessionStorage.getItem("@sharenergy-access_token") as string)
-    );
-
     try {
       const res = await api.put(
         `/clients/${clientId}`,
