@@ -25,7 +25,6 @@ export class MongodbClientsRepository implements IClientsRepository {
 
   async findAll(): Promise<Client[]> {
     const clients = await clientModel.find();
-    console.log(clients);
     return clients.map(ClientMapper.toDomain);
   }
 
