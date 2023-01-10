@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../shared/errors/AppError";
-import { ICreateClientDTO } from "../../dtos/create-client-dto";
 import { Client } from "../../entities/client";
 import { IClientsRepository } from "../../repositories/clients-repository";
 
@@ -11,7 +10,7 @@ export class CreateClientUseCase {
     private clientsRepository: IClientsRepository
   ) {}
 
-  async execute(data: ICreateClientDTO) {
+  async execute(data: Client) {
     const { address, cellphone, cpf, email, name } = data;
 
     const emailAlreadyExists = await this.clientsRepository.findByEmail(email);
