@@ -18,7 +18,7 @@ type Connection struct {
 }
 
 func NewMongoConnection(cfg *config.Settings) Connection {
-	uri := fmt.Sprintf("mongodb://%s/%s", cfg.DbHost, cfg.DbName)
+	uri := fmt.Sprintf("mongodb://%s:%s/%s", cfg.DbHost, cfg.DbPort, cfg.DbName)
 
 	credentials := options.Credential{
 		Username: cfg.DbUser,
