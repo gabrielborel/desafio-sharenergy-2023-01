@@ -1,15 +1,15 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mongodb_database:
     image: mongo:latest
     ports:
-      - '27017:27017'
+      - "27017:27017"
 
-  nestjs_app:
+  nodejs_app:
     build: .
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
